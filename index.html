@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="SpoolLabel">
     <link rel="apple-touch-icon" href="https://www.spoolease.io/img/spoolease-logo.png">
-
+    <link rel="icon" href="https://www.spoolease.io/img/spoolease-logo.png">
     <!-- Inlined Web App Manifest mit Base64-Icon -->
     <link rel="manifest" href="manifest.json">
     
@@ -675,19 +675,10 @@
             }, 'image/png');
         }
 
-        function registerServiceWorker() {
+   function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
-        const swCode = `
-            const CACHE_NAME = 'spoolease-v2';
-            self.addEventListener('install', (e) => self.skipWaiting());
-            self.addEventListener('activate', (e) => self.clients.claim());
-            self.addEventListener('fetch', (e) => {
-                e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-            });
-        `;
-        const blob = new Blob([swCode], { type: 'text/javascript' });
-        const blobUrl = URL.createObjectURL(blob);
-        navigator.serviceWorker.register(blobUrl).catch(err => console.log('SW Error:', err));
+        navigator.serviceWorker.register('./sw.js')
+            .catch(err => console.log('SW Error:', err));
     }
 }
 
