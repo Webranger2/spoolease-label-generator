@@ -676,23 +676,20 @@
         }
 
         function registerServiceWorker() {
-            if ('serviceWorker' in navigator) {
-                const swCode = `
-                    const CACHE_NAME = 'spoolease-cache-v1';
-                    self.addEventListener('install', (e) => {
-                        self.skipWaiting();
-                    });
-                    self.addEventListener('fetch', (e) => {
-                        e.respondWith(
-                            caches.match(e.request).then((res) => res || fetch(e.request).catch(() => caches.match(e.request)))
-                        );
-                    });
-                `;
-                const blob = new Blob([swCode], { type: 'text/javascript' });
-                const blobUrl = URL.createObjectURL(blob);
-                navigator.serviceWorker.register(blobUrl).catch(() => {});
-            }
-        }
+    if ('serviceWorker' in navigator) {
+        const swCode = `
+            const CACHE_NAME = 'spoolease-v2';
+            self.addEventListener('install', (e) => self.skipWaiting());
+            self.addEventListener('activate', (e) => self.clients.claim());
+            self.addEventListener('fetch', (e) => {
+                e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+            });
+        `;
+        const blob = new Blob([swCode], { type: 'text/javascript' });
+        const blobUrl = URL.createObjectURL(blob);
+        navigator.serviceWorker.register(blobUrl).catch(err => console.log('SW Error:', err));
+    }
+}
 
         window.addEventListener('DOMContentLoaded', () => {
             const savedBase = localStorage.getItem('spoolease_baseurl');
