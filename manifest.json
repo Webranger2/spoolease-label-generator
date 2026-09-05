@@ -1,0 +1,15 @@
+{
+  "short_name": "SpoolLabel",
+  "name": "SpoolEase Label Generator",
+  "icons": [
+    {
+      "src": "https://www.spoolease.io/img/spoolease-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./",
+  "display": "standalone",
+  "theme_color": "#0071e3",
+  "background_color": "#f5f5f7"
+}
